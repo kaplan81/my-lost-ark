@@ -1,0 +1,23 @@
+#slide_0_0 .content {
+    background: url("../../../content/img/slide_0_0/bg.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+#slide_0_0 .content #whole-slide {width: 100%; height: 100%;}
+#slide_0_0 .content #slider1 {position: absolute; top: 307px; left: 455px; width: 283px; height: 162px;}
+#slide_0_0 .content #slider1 img {width: 100%; height: 100%;}
+
+#slide_0_0 .content #slider2 {position: absolute; top: 0; left: 600px; width: 155px; height: 100%; -webkit-transform:skewX(8deg);}
+#slide_0_0 .content #slider2 ul {position: absolute; top: 307px;}
+#slide_0_0 .content #slider2 ul li {list-style-type: none; height: 37px;  -webkit-transform:skewX(-8deg)}
+#slide_0_0 .content #slider2 ul li:nth-child(1) { width: 143px; background: url("../../../content/img/slide_0_0/OFF1.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(2) { width: 62px; background: url("../../../content/img/slide_0_0/OFF2.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(3) { width: 81px; background: url("../../../content/img/slide_0_0/OFF3.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(4) { width: 83px; background: url("../../../content/img/slide_0_0/OFF4.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(5) { width: 96px; background: url("../../../content/img/slide_0_0/OFF5.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(6) { width: 128px; background: url("../../../content/img/slide_0_0/OFF6.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(7) { width: 73px; background: url("../../../content/img/slide_0_0/OFF7.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(8) { width: 153px; background: url("../../../content/img/slide_0_0/OFF8.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+#slide_0_0 .content #slider2 ul li:nth-child(9) { width: 116px; background: url("../../../content/img/slide_0_0/OFF9.png"); background-size: 100%; background-repeat: no-repeat; background-position:center; }
+
+#slide_0_0 .content #slider2 ul li.selected {opacity: 0; height: 162px;}

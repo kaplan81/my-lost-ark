@@ -1,0 +1,31 @@
+<div class="row animated fadeIn">
+    <div class="col-md-12 text-xs-center">
+        <h1>Your Table</h1>
+    </div>
+</div>
+<div class="row animated fadeIn">
+    <div class="col-md-12 text-xs-center">
+        <a class="btn btn-default" routerLink="/dashboard/chart">->Go to your chart</a>
+    </div>
+</div>
+<div class="row animated fadeIn">
+    <div class="col-md-8 offset-md-2">
+        <br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-xs-center">Continent</th>
+                    <th class="text-xs-center">Population</th>
+                    <th class="text-xs-center">Countries</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let continent of continents">
+                    <td class="text-xs-center cont-name">{{continent.denomination}}</td>
+                    <td class="text-xs-center">{{continent.realPopulation | number:'3.0-0'}} habs</td>
+                    <td class="text-xs-center">{{continent.countries}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

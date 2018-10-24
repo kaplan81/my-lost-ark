@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "pretty": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "declaration": false,
+        "removeComments": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "./dist-aot/unbundled-aot",
+        "typeRoots": [
+            "./node_modules/@types/"
+        ]
+    },
+    "types": [
+        "es6",
+        "node"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        
+        
+        // TODO cut this after PR https://github.com/angular/angular/pull/12158
+        "src/compiled",
+        "src/**/*.e2e.ts",
+        "src/**/*.spec.ts"
+    ],
+    "angularCompilerOptions": {
+        "genDir": "aot",
+        "skipMetadataEmit": true
+    }
+}
+

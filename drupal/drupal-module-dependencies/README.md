@@ -1,0 +1,2 @@
+# Drupal Module: manage node field dependencies.
+Sometimes Drupal Conditional Fields module gives many troubles so you will prefer to develop a module that manages this dependencies you are interested in. The values of some fields are set depending on other fields' values. 

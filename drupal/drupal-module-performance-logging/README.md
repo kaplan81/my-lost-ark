@@ -1,0 +1,2 @@
+# Drupal Module: log the performance of your site.
+If you notice your site is getting slower every day maybe you should do checks to see exactly what is happening. In order to do so you need to log data such as time, domain, path, user and load performance on every page request.

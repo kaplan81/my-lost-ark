@@ -1,0 +1,75 @@
+<?php
+
+/**
+* @file
+* Module file for starting Sala Form Dependencies
+*/
+
+function sala_form_dependencies_form_alter(&$form, &$form_state, $form_id) {
+	if ($form_id == 'sala_node_form') {  
+		$form['field_sala_capacidades_terms']['#type'] = 'hidden';
+	}
+}
+
+function sala_form_dependencies_node_presave($node) {
+	if($node->type == 'sala') {
+		$eventos_array = array();
+		if(isset($node->field_sala_capac_teatro['und'][0]['value'])) {
+			$teatro = $node->field_sala_capac_teatro['und'][0]['value'];
+			array_push($eventos_array, $teatro);
+		}
+		if(isset($node->field_sala_capac_escuela['und'][0]['value'])) {
+			$escuela = $node->field_sala_capac_escuela['und'][0]['value'];
+			array_push($eventos_array, $escuela);
+		}
+		if(isset($node->field_capac_banquete_max['und'][0]['value'])) {
+			$banquete = $node->field_capac_banquete_max['und'][0]['value'];
+			array_push($eventos_array, $banquete);
+		}
+		if(isset($node->field_sala_capac_cocktail_max['und'][0]['value'])) {
+			$cocktail = $node->field_sala_capac_cocktail_max['und'][0]['value'];
+			array_push($eventos_array, $cocktail);
+		}
+		if(isset($node->field_sala_capac_imperial_max['und'][0]['value'])) {
+			$imperial = $node->field_sala_capac_imperial_max['und'][0]['value'];
+			array_push($eventos_array, $imperial);
+		}
+		if(isset($node->field_sala_capac_u_max['und'][0]['value'])) {
+			$u = $node->field_sala_capac_u_max['und'][0]['value'];
+			array_push($eventos_array, $u);
+		}
+		if(isset($node->field_sala_capac_cena_baile_max['und'][0]['value'])) {
+			$cena = $node->field_sala_capac_cena_baile_max['und'][0]['value'];
+			array_push($eventos_array, $cena);
+		}
+		$eventos_length = count($eventos_array);
+
+		$capacidad_term_tree = taxonomy_get_tree(5);
+
+		$terms_array = $node->field_sala_capacidades_terms['und'];
+		$terms_array = array();
+
+		for ($i=0; $i < $eventos_length ; $i++) { 
+			if($eventos_array[$i] > 0 && $eventos_array[$i] <= 20) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[0]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 20 && $eventos_array[$i] <= 50) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[1]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 50 && $eventos_array[$i] <= 100) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[2]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 100 && $eventos_array[$i] <= 200) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[3]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 200 && $eventos_array[$i] <= 500) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[4]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 500 && $eventos_array[$i] <= 1000) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[5]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 1000 && $eventos_array[$i] <= 2000) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[6]->tid)); 
+			} elseif($eventos_array[$i] > 0 && $eventos_array[$i] > 2000) {
+				array_push($terms_array, array('tid' => $capacidad_term_tree[7]->tid)); 
+			}
+		}
+		$node->field_sala_capacidades_terms['und'] = $terms_array;
+	}
+}
+
+

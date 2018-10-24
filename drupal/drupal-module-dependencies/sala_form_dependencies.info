@@ -1,0 +1,3 @@
+name = Sala Form Dependencies
+description = Manages dependencies between the different fields of the Sala Node Form. By Andres Gesteira.
+core = 7.x

@@ -1,0 +1,2 @@
+# Drupal Module: create custom rule.
+Rules module is very useful but sometimes we do not find the needed action to respond to a certain event. In that case we can create our action by writing a my_module.rules.inc file within a module of ours. In my case I had per node access control settings that also needed to be cloned when the node was cloned. I had that event preconfigured but I lacked the action so I made it.

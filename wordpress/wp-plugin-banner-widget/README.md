@@ -1,0 +1,2 @@
+# Wordpress plugin: widget creation for a displayable banner. 
+To create any widget you need to create a class with the functions form, update and widget and then register it through the WP action widgets_init. Then you call the output from a template with the is_active_sidebar() function as a condition. In this case we create a banner area thas is displayable depending on the parameters passed to the widget. We can use this to post adds from time to time.

@@ -1,0 +1,35 @@
+<div class="row animated fadeIn">
+    <div class="col-md-12 text-xs-center">
+        <h1>Your Chart</h1>
+    </div>
+</div>
+<div class="row animated fadeIn">
+    <div class="col-md-12 text-xs-center">
+        <a routerLink="/dashboard/table">->Go to your table</a>
+    </div>
+</div>
+<div class="row animated fadeIn">
+    <div class="col-md-12 text-xs-center">
+        <figure>
+            <br>
+            <div class="buttons" #kaplanButtons>
+                <button 
+                    *ngFor="let continent of continents"
+                    (click)="setContinent(continent)"
+                    [class.active]="isSelected(continent)" 
+                >
+                {{continent.denomination}}
+                </button>
+            </div>
+
+            <svg width="150" height="150" class="chart" #kaplanChart>
+                <circle r="25" cx="75" cy="75" class="pie" #kaplanPie />
+            </svg>
+            <br>
+            <figcaption>
+                World population by continent:<br>
+                <span>{{population}}%</span>
+            </figcaption>
+        </figure>
+    </div>
+</div>

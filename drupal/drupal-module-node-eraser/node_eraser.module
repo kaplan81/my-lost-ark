@@ -1,0 +1,64 @@
+<?php
+/**
+ * @file
+ * This module deletes certain unnecessary content periodically using cron.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function node_eraser_cron() {
+	node_eraser_reservas();
+}
+
+/**
+ * Function that deletes "Reserva de sala interna" content.
+ */
+function node_eraser_reservas() {
+	$result_cron_timestamp = db_query("SELECT timestamp FROM {watchdog} WHERE type='cron' ORDER BY timestamp DESC LIMIT 1");
+	if ($result_cron_timestamp) {
+		$cron_last_timestamp = array();
+	  	foreach ($result_cron_timestamp as $record_timestamp) {
+	  		$cron_last_timestamp[] = $record_timestamp;
+	  	}
+	  	$time_y = date('y', time());
+	  	$time_m = (int)date('m', time()) - 1;
+	  	$time_m = sprintf("%02d",  $time_m);
+	  	// They want to delete registries previous to the month before the current one.
+	  	$time_ym = $time_y . $time_m;
+	  	// $time_ym = date('ym', time());
+	  	$time_ymd = date('ymd', time());
+	  	$cron_last_ym =  date('ym', $cron_last_timestamp[0]->timestamp);
+	  	$cron_last_ymd =  date('ymd', $cron_last_timestamp[0]->timestamp);
+	  	$result_reservas = db_query("SELECT field_reserva_sala_fecha_value, entity_id FROM {field_data_field_reserva_sala_fecha}");
+	  	$deleted_count = 0;
+
+	  	// MONTHLY ACCTION:
+	  	if ( $cron_last_ym != $time_ym ) {	  		
+            foreach ($result_reservas as $record_reservas) {
+            	$record_reservas_ym = date('ym',strtotime($record_reservas->field_reserva_sala_fecha_value));
+          		if ($record_reservas_ym < $time_ym) {
+	            	// My action: delete all 'reserva_sala_interna' nodes that are previous to the month before the current one.
+	                node_delete($record_reservas->entity_id);
+	                $deleted_count++;
+              	}
+            }
+            $variables_ym = array('deleted_reservas' => $deleted_count . ' Reserva de sala interna nodes previous to current month were deleted.');
+            watchdog('cron', "deleted_reservas", $variables_ym, WATCHDOG_NOTICE);
+	  	}
+
+	  	// DAILY ACCTION:
+	  	if ( $cron_last_ymd != $time_ymd ) {
+	  		foreach ($result_reservas as $record_reservas) {
+            	$record_reservas_ymd = date('ymd',strtotime($record_reservas->field_reserva_sala_fecha_value));
+          		if ($record_reservas_ymd < $time_ymd) {
+	            	// My action: delete all 'reserva_sala_interna' nodes that are previous to the month before the current one.
+	                node_delete($record_reservas->entity_id);
+	                $deleted_count++;
+              	}
+            }
+            $variables_ymd = array('deleted_reservas' => $deleted_count . ' Reserva de sala interna nodes previous to current day were deleted.');
+            watchdog('cron', "deleted_reservas", $variables_ymd, WATCHDOG_NOTICE);
+	  	}
+	}
+}

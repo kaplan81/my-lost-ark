@@ -1,0 +1,77 @@
+<?php
+/**
+ * @file
+ * This modules logs data such as time, domain, path, user and load performance on every page request.
+ * The data should be daily stored on a file for further statistics.
+ */
+
+/**
+ * Implements hook_exit().
+ */
+function performance_logging_exit() {
+   performance_logging_data();
+}
+
+/**
+ * Function that collects performance data and stores it in a txt file.
+ */
+function performance_logging_data() {  
+  global $base_url, $user;
+
+  // Don't log drush access.
+  if (drupal_is_cli() && variable_get('performance_nodrush', 1)) {
+    return;
+  }
+
+  // Define $path.
+  if (isset($_GET['q']) && $_GET['q']) {
+    $path = $_GET['q'];
+  } elseif (drupal_is_cli()) {
+    $path = 'drush';
+  } else {
+    $path = variable_get('site_frontpage', 'node');
+  }
+  
+  // Skip paths that begin with either "system" or "js".
+  if (!preg_match('/^(system|js)/', $path)) {
+      // Get current date parameters and set file title.
+      $cur_year = date("Y");
+      $cur_month = date("m");
+      $cur_day = date("d");
+      $cur_date = $cur_day . '/' . $cur_month . '/' . $cur_year;
+      $date_suffix = $cur_year . $cur_month . $cur_day;
+      $txt_file_name = 'per_log_' . $date_suffix . '.txt';
+
+      // Define log data to be stored.
+      $time = $cur_date . ' ' . date("H:i:s", $_SERVER['REQUEST_TIME']);
+      $domain = $base_url;
+      $path =  '/' . drupal_get_path_alias($path);
+      $uid = $user->uid;
+      $user_name = $user->name;
+      $timer = timer_read('page');
+      $memory = round( (memory_get_peak_usage(TRUE)/1000000), 2 );
+
+      // Set file header string.
+      $header = "TIME|DOMAIN|PATH|UID|USER|MS|MB\r\n";
+      // Set file entry string.
+      $log = $time . '|' .
+             $domain . '|' .
+             $path . '|' .
+             $uid . '|' .
+             $user_name . '|' .
+             $timer . '|' .
+             $memory . "\r\n";
+
+      // Create file with header and first entry if it does not exists. Otherwise just add new entry. 
+      $txt_dest = variable_get('file_private_path', conf_path() . '/files') . "/performance_logging/";
+      if ( !file_exists( $txt_dest . $txt_file_name ) ) {
+        $txt_file = fopen($txt_dest . $txt_file_name, 'w');
+        fwrite($txt_file, $header . $log);
+        fclose($txt_file);
+      } else {
+        $txt_file = fopen($txt_dest . $txt_file_name, 'a');
+        fwrite($txt_file, $log);
+        fclose($txt_file);
+      }
+  }
+}

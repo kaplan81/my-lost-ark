@@ -1,0 +1,3 @@
+name = Node Eraser
+description = Deletes certain unnecessary content periodically. By Andres Gesteira.
+core = 7.x

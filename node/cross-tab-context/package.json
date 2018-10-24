@@ -1,0 +1,19 @@
+{
+  "name": "cross-tab-context",
+  "version": "1.0.0",
+  "description": "Easily handle tabs common data with Web Storage",
+  "main": "./lib/cross-tab-context.js",
+  "scripts": {
+    "build": "rimraf lib && webpack"
+  },
+  "author": "Andres Gesteira @kaplan81",
+  "license": "MIT",
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.0.8",
+    "source-map-loader": "^0.1.6",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1",
+    "rimraf": "^2.5.4"
+  },
+  "repository": {}
+}

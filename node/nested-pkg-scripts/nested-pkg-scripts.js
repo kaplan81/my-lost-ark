@@ -1,0 +1,10 @@
+const npmHooks = ['install', 'uninstall', 'version', 'start', 'restart', 'stop', 'test', 'publish'];
+const pkg = process.argv[2]; 
+const pkgVersion = process.argv[3]; 
+const pkgScriptName = process.argv[4];
+const pkgScript = npmHooks.find( hook => hook === pkgScriptName ) === pkgScriptName ? `npm ${pkgScriptName}` : `npm run ${pkgScriptName}`;
+const exec = require('child_process').exec;
+const child = exec(pkgScript, { cwd: `${pkg}/${pkgVersion}`, maxBuffer: 300*1024 });
+child.stdout.on('data', data => console.log('stdout: ' + '\n' + data));
+child.stderr.on('data', data => console.log('stderr: ' + '\n' + data));
+child.on('close', code => console.log('closing code: ' + '\n' + code));
